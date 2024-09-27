@@ -15,7 +15,7 @@ function sumIntegers() {
     } while (number !== -5);  // Continue looping until -5 is entered
 
     // Display the sum of the entered numbers
-    console.log("The sum of all numbers entered is: " + sum);
+    console.log("The sum of all \t\nnumbers entered is: " + sum);
 }
 
 // Call the function
