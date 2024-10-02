@@ -1,10 +1,10 @@
-function addTask(submittedList, newCustName, rating) {
+function addTask(submittedList, newCustName, newRating) {
     // update my tasks array
     let newRating = {
        // use a random number for the ID for the purpose of testing
        "id": Math.floor((Math.random() * 100000) + 9999),
        "name": newCustName,
-       "rating": rating
+       "rating": newRating
    }
 
    // add the new task to the array
@@ -45,17 +45,17 @@ function updateTask(submittedList, ratingId, newCustName,newRating , newIsDone) 
 function deleteTask(ratings, ratingIdToDelete) {
 
    // 1. find the index of the task that I want to delete
-   let indexToDelete = tasks.findIndex(function(t){
-       return t.id == taskIdToDelete;
+   let indexToDelete = ratings.findIndex(function(k){
+       return k.id == ratingIdToDelete;
    })
 
    // 2. delete the task from the array
-   tasks.splice(indexToDelete, 1);
+   ratings.splice(indexToDelete, 1);
 }
 
-function updateTaskDone(tasks, taskId) {
-   let index = tasks.findIndex(function(t){
-       return t.id == taskId
+function updateTaskDone(ratings, ratingId) {
+   let index = ratings.findIndex(function(t){
+       return k.id == ratingId
    });
 
    // if the the task is already done, check it as not done
@@ -66,5 +66,5 @@ function updateTaskDone(tasks, taskId) {
    // }
 
    // or we can just use the ! operator to invert
-   tasks[index].done = !tasks[index].done;
+   ratings[index].done = !ratings[index].done;
 }

@@ -81,7 +81,7 @@ function renderTasks() {
         // METHOD TWO: Using createElement to create the <li> but using innerHTML to set the <li>
         let liElement = document.createElement("li");
         liElement.innerHTML = `
-            ${t.name} (${t.rating}) 
+            ${k.name} (${k.rating}) 
             <input type="checkbox" class="checkbox"/>
             <button class="edit">Edit</button> 
             <button class="delete">Delete</button>
@@ -90,9 +90,9 @@ function renderTasks() {
         // we can call querySelector on any DOM object. If we do so, then the querySelector
         // will only search children within the object
         let checkbox = liElement.querySelector(".checkbox");
-        checkbox.checked = t.done;
+        checkbox.checked = k.done;
         checkbox.addEventListener("click", function(){
-            updateTaskDone(ratings, t.id);
+            updateTaskDone(ratings, k.id);
             renderTasks();
         })
 
@@ -100,8 +100,8 @@ function renderTasks() {
         let editButton = liElement.querySelector(".edit");
         // start the process of editing a task
         editButton.addEventListener("click", function(){
-            let newCustName = prompt("Enter the new task name: ", t.name);
-            let newRating = prompt("Enter the new urgency: ", t.rating);
+            let newCustName = prompt("Enter the new task name: ", k.name);
+            let newRating = prompt("Enter the new urgency: ", k.rating);
             let newDone = prompt("Is the task done (y/n)");
 
             let isDone = false;
@@ -109,7 +109,7 @@ function renderTasks() {
                 isDone = true;
             }
 
-            updateTask(ratings, t.id, newCustName, newRating, isDone);
+            updateTask(ratings, k.id, newCustName, newRating, isDone);
             renderTasks(); // redraw all the tasks, along with any changes
 
         });
@@ -120,7 +120,7 @@ function renderTasks() {
         deleteButton.addEventListener("click", function(){
             let reallyDelete = confirm("Are you sure you want to delete?");
             if (reallyDelete) {
-                deleteTask(ratings, t.id);
+                deleteTask(ratings, k.id);
                 renderTasks();
             }
         })
