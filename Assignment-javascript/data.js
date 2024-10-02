@@ -1,17 +1,17 @@
-function addTask(submittedList, newCustName, newRating) {
+function addTask(submittedList, newCustName, ratings) {
     // update my tasks array
-    let newRating = {
+    let newRatings = {
        // use a random number for the ID for the purpose of testing
        "id": Math.floor((Math.random() * 100000) + 9999),
        "name": newCustName,
-       "rating": newRating
+       "rating": ratings
    }
 
    // add the new task to the array
-   submittedList.push(newRating);
+   submittedList.push(newRatings);
 }
 
-function updateTask(submittedList, ratingId, newCustName,newRating , newIsDone) {
+function updateTask(submittedList, rateId, newCustName,newRating , newIsDone) {
 
    // 1. find the index
    // let index = null;
@@ -25,8 +25,8 @@ function updateTask(submittedList, ratingId, newCustName,newRating , newIsDone) 
    // }
 
    // using findIndex
-   let index = submittedList.findIndex(function(ratings){
-       return ratings.id == ratingId; // if the annoymous function returns true,
+   let index = submittedList.findIndex(function(rate){
+       return rate.id == rateId; // if the annoymous function returns true,
                                 // then the index of task is the result
    })
    
@@ -34,7 +34,7 @@ function updateTask(submittedList, ratingId, newCustName,newRating , newIsDone) 
    // make sure index is no null, undefined or 0 etc.
    if (index) {
     submittedList[index] = {
-           "id": ratingId,
+           "id": rateId,
            "name": newCustName,
            "rating": newRating,
            "done": newIsDone

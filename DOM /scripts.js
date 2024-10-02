@@ -13,7 +13,7 @@ button.addEventListener("click",function() {
    let bmi =weight/ height **2;
 
    let resultDiv =document.querySelector("results");
-   resultdive.innerHTML = `Your BMI is ${bmi}`;"
+   resultdive.innerHTML = `Your BMI is ${bmi}`;
 
    alert(bmi);
 });

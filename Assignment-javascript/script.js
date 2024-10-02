@@ -27,12 +27,12 @@ window.addEventListener("DOMContentLoaded", function(){
 
     // Creating Task Section
     // select the button
-    document.querySelector("#Submit").addEventListener("click", function(){
-        let Name = document.querySelector("#Name").value;
+    document.querySelector("#createSubmit").addEventListener("click", function(){
+        let newCustName = document.querySelector("#CustName").value;
         let rating = document.querySelector(".rating:checked").value;
 
         // the addTask function is in data.js
-        addTask(ratings, Name, rating);
+        addTask(ratings, newCustName, rating);
 
         // re-render all the tasks
         renderTasks();
@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", function(){
 // all the tasks
 function renderTasks() {
 
-    let submittedList = document.querySelector("#Ratings");
+    let submittedList = document.querySelector("#ratings");
 
     // empty the task list of all the <li> inside it
     submittedList.innerHTML = ""; // remove all the children inside
@@ -100,8 +100,8 @@ function renderTasks() {
         let editButton = liElement.querySelector(".edit");
         // start the process of editing a task
         editButton.addEventListener("click", function(){
-            let newCustName = prompt("Enter the new task name: ", k.name);
-            let newRating = prompt("Enter the new urgency: ", k.rating);
+            let newCustName = prompt("Enter the new customer name: ", k.name);
+            let newRating = prompt("Enter the new rating: ", k.rating);
             let newDone = prompt("Is the task done (y/n)");
 
             let isDone = false;
