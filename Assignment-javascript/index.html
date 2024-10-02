@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Food Quality Survey</h1>
+
+    <div>
+        <h2>Help us to serve you better, please rate our food quality</h2>
+        <div>
+            <label>Customer Name:</label>
+            <input type="text" id="Name" />
+        </div>
+        <div>
+            <label>Rating:</label>
+            <input type="radio" name="rating" class="rating" value="worst"/>
+            <label>Worst</label>
+
+            <input type="radio" name="rating" class="rating" value="bad"/>
+            <label>Bad</label>
+
+            <input type="radio" name="rating" class="rating" value="average"/>
+            <label>Average</label>
+
+            <input type="radio" name="rating" class="rating" value="good"/>
+            <label>Good</label>
+
+            <input type="radio" name="rating" class="rating" value="excellent"/>
+            <label>Excellent</label>
+        </div>
+        <input type="button" value="Submit" id="createSubmit"/>
+    </div>
+
+    <ul id="Ratings">
+
+    </ul>
+    <!-- data.js should come first BECAUSE script.js uses a function from it -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
