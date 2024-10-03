@@ -1,17 +1,20 @@
-function addTask(submittedList, newCustName, ratings) {
+
+function addTask(submittedList, newCustName, ratings, store) {
     // update my tasks array
     let newRatings = {
        // use a random number for the ID for the purpose of testing
        "id": Math.floor((Math.random() * 100000) + 9999),
+       "store": store,
        "name": newCustName,
-       "rating": ratings
+       "rating": ratings,
+       
    }
 
    // add the new task to the array
    submittedList.push(newRatings);
 }
 
-function updateTask(submittedList, rateId, newCustName,newRating , newIsDone) {
+function updateTask(submittedList, rateId, newCustName, newstore, newRating , newIsDone) {
 
    // 1. find the index
    // let index = null;
@@ -36,6 +39,7 @@ function updateTask(submittedList, rateId, newCustName,newRating , newIsDone) {
     submittedList[index] = {
            "id": rateId,
            "name": newCustName,
+           "store": newstore,
            "rating": newRating,
            "done": newIsDone
        }

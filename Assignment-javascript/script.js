@@ -3,21 +3,25 @@ let ratings = [
     {
         "id": 1,  // unique identifier for the record
         "name": "Stephen Chow",
+        "store":"Jurong Point",
         "rating": "average",
         "done": false
     },
     {
         "id": 2,
         "name": "Andy Lau",
+        "store":"North Point",
         "rating":"good",
         "done": false
     },
     {
         "id": 3,
         "name": "Jackie Cheung",
+        "store":"Compass One",
         "rating":"excellent",
         "done": true
     }
+
 ]
 // DOMContentLoaded is an event that fires
 // when the HTML is loaded completely
@@ -29,10 +33,12 @@ window.addEventListener("DOMContentLoaded", function(){
     // select the button
     document.querySelector("#createSubmit").addEventListener("click", function(){
         let newCustName = document.querySelector("#CustName").value;
+        let newstore = document.querySelector(".store").value;
         let rating = document.querySelector(".rating:checked").value;
+        
 
         // the addTask function is in data.js
-        addTask(ratings, newCustName, rating);
+        addTask(ratings, newCustName, newstore, rating);
 
         // re-render all the tasks
         renderTasks();
@@ -81,7 +87,7 @@ function renderTasks() {
         // METHOD TWO: Using createElement to create the <li> but using innerHTML to set the <li>
         let liElement = document.createElement("li");
         liElement.innerHTML = `
-            ${k.name} (${k.rating}) 
+            Name:${k.name}  Outlet:${k.store}  Rating:${k.rating}
             <input type="checkbox" class="checkbox"/>
             <button class="edit">Edit</button> 
             <button class="delete">Delete</button>
@@ -101,6 +107,7 @@ function renderTasks() {
         // start the process of editing a task
         editButton.addEventListener("click", function(){
             let newCustName = prompt("Enter the new customer name: ", k.name);
+            let newOutlet = prompt("Enter Outlet:", k.store);
             let newRating = prompt("Enter the new rating: ", k.rating);
             let newDone = prompt("Is the task done (y/n)");
 
@@ -109,7 +116,7 @@ function renderTasks() {
                 isDone = true;
             }
 
-            updateTask(ratings, k.id, newCustName, newRating, isDone);
+            updateTask(ratings, k.id, newCustName, newOutlet, newRating, isDone);
             renderTasks(); // redraw all the tasks, along with any changes
 
         });
