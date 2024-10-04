@@ -1,12 +1,29 @@
+let BIN_ID="66ff5732ad19ca34f8b26050";
+let BASE_API_URL="https://api.jsonbin.io/v3";
 
-function addTask(submittedList, newCustName, ratings, store) {
+async function loadData() {
+    let response = await axios.get(`${BASE_API_URL}/b/${BIN_ID}/latest`);
+    console.log("response",response)
+    console.log("response.data.record",response.data.record)
+    return response.data.record;  
+}
+
+// first parameter: array of tasks to save
+async function saveData(ratings) {
+    // if following notes, you can ignore the third argument (our bin is public
+    // so need to set the signature)
+    let response = await axios.put(`${BASE_API_URL}/b/${BIN_ID}`, ratings);
+    return response.data;
+}
+
+function addTask(submittedList, newCustName, newstore, newRate) {
     // update my tasks array
     let newRatings = {
        // use a random number for the ID for the purpose of testing
        "id": Math.floor((Math.random() * 100000) + 9999),
-       "store": store,
        "name": newCustName,
-       "rating": ratings,
+       "store": newstore,
+       "rating": newRate
        
    }
 
@@ -14,18 +31,7 @@ function addTask(submittedList, newCustName, ratings, store) {
    submittedList.push(newRatings);
 }
 
-function updateTask(submittedList, rateId, newCustName, newstore, newRating , newIsDone) {
-
-   // 1. find the index
-   // let index = null;
-   // for (let i =0; i < taskList.length; i++) {
-   //     let currentTask = taskList[i];
-     
-   //     if (currentTask.id == taskId) {
-   //         index = i;
-   //         break;
-   //     }
-   // }
+function updateTask(submittedList, rateId, newCustName, newstore, newRating){
 
    // using findIndex
    let index = submittedList.findIndex(function(rate){
@@ -40,8 +46,7 @@ function updateTask(submittedList, rateId, newCustName, newstore, newRating , ne
            "id": rateId,
            "name": newCustName,
            "store": newstore,
-           "rating": newRating,
-           "done": newIsDone
+           "rating": newRating
        }
    }
 }
@@ -49,8 +54,8 @@ function updateTask(submittedList, rateId, newCustName, newstore, newRating , ne
 function deleteTask(ratings, ratingIdToDelete) {
 
    // 1. find the index of the task that I want to delete
-   let indexToDelete = ratings.findIndex(function(k){
-       return k.id == ratingIdToDelete;
+   let indexToDelete = ratings.findIndex(function(r){
+       return r.id == ratingIdToDelete;
    })
 
    // 2. delete the task from the array
@@ -58,8 +63,8 @@ function deleteTask(ratings, ratingIdToDelete) {
 }
 
 function updateTaskDone(ratings, ratingId) {
-   let index = ratings.findIndex(function(t){
-       return k.id == ratingId
+   let index = ratings.findIndex(function(r){
+       return r.id == ratingId
    });
 
    // if the the task is already done, check it as not done

@@ -1,31 +1,13 @@
 // need a way to store our data
-let ratings = [
-    {
-        "id": 1,  // unique identifier for the record
-        "name": "Stephen Chow",
-        "store":"Jurong Point",
-        "rating": "average",
-        "done": false
-    },
-    {
-        "id": 2,
-        "name": "Andy Lau",
-        "store":"North Point",
-        "rating":"good",
-        "done": false
-    },
-    {
-        "id": 3,
-        "name": "Jackie Cheung",
-        "store":"Compass One",
-        "rating":"excellent",
-        "done": true
-    }
+let ratings = [];
 
-]
 // DOMContentLoaded is an event that fires
 // when the HTML is loaded completely
-window.addEventListener("DOMContentLoaded", function(){
+window.addEventListener("DOMContentLoaded", async function(){
+    
+    ratings = await loadData();
+    console.log(ratings);
+    
     // render all the tasks in the database
     renderTasks();
 
@@ -33,105 +15,74 @@ window.addEventListener("DOMContentLoaded", function(){
     // select the button
     document.querySelector("#createSubmit").addEventListener("click", function(){
         let newCustName = document.querySelector("#CustName").value;
-        let newstore = document.querySelector(".store").value;
+        let newstore = document.querySelector(".store:checked").value;
         let rating = document.querySelector(".rating:checked").value;
         
-
+        
         // the addTask function is in data.js
         addTask(ratings, newCustName, newstore, rating);
 
         // re-render all the tasks
         renderTasks();
 
+        //to clear off text box after successfully added in a new entry
+        document.querySelector("#CustName").value = "";
+
     });
+    document.querySelector("#save-button").addEventListener("click", function(){
+        
+        saveData(ratings);
+    })
 
 })
 
-// renderTasks is to update the ul#tasks with 
+// renderTasks is to update the ul#ratings with 
 // all the tasks
-function renderTasks() {
-
-    let submittedList = document.querySelector("#ratings");
-
-    // empty the task list of all the <li> inside it
-    submittedList.innerHTML = ""; // remove all the children inside
-
-    for (let k of ratings) {
-      
-           
-        // METHOD ONE: Using createElement and appendChild to add the checkbox and the button
-        // let liElement = document.createElement("li");
-        // liElement.innerHTML = `
-        //     ${t.name} (${t.urgency}) 
-        // `
-
-
-        // Using JS to write <input type="checkbox"/>
-        // let checkbox = document.createElement("input");
-        // checkbox.type = "checkbox";
-        // checkbox.checked = t.done;  // if task is done, checkbox will be checked
-
-        // liElement.appendChild(checkbox);
-
-        // // Use JS to write <button>Edit</button>
-        // let button = document.createElement("button");
-        // button.innerHTML = "Edit";
-        // button.addEventListener("click", function(){
-        //     alert("Button clicked");
-        // })
-
-        // // Add the newly created button to the <li>
-        // liElement.appendChild(button);
-
-        
-        // METHOD TWO: Using createElement to create the <li> but using innerHTML to set the <li>
-        let liElement = document.createElement("li");
-        liElement.innerHTML = `
-            Name:${k.name}  Outlet:${k.store}  Rating:${k.rating}
-            <input type="checkbox" class="checkbox"/>
-            <button class="edit">Edit</button> 
-            <button class="delete">Delete</button>
-        `
-
-        // we can call querySelector on any DOM object. If we do so, then the querySelector
-        // will only search children within the object
-        let checkbox = liElement.querySelector(".checkbox");
-        checkbox.checked = k.done;
-        checkbox.addEventListener("click", function(){
-            updateTaskDone(ratings, k.id);
-            renderTasks();
-        })
-
-        // for edit
-        let editButton = liElement.querySelector(".edit");
-        // start the process of editing a task
-        editButton.addEventListener("click", function(){
-            let newCustName = prompt("Enter the new customer name: ", k.name);
-            let newOutlet = prompt("Enter Outlet:", k.store);
-            let newRating = prompt("Enter the new rating: ", k.rating);
-            let newDone = prompt("Is the task done (y/n)");
-
-            let isDone = false;
-            if (newDone.toLowerCase() == 'y' ) {
-                isDone = true;
-            }
-
-            updateTask(ratings, k.id, newCustName, newOutlet, newRating, isDone);
-            renderTasks(); // redraw all the tasks, along with any changes
-
-        });
-
-        // for delete 
-        // search within the liElement's children to find the element with the class ".delete"
-        let deleteButton = liElement.querySelector(".delete");
-        deleteButton.addEventListener("click", function(){
-            let reallyDelete = confirm("Are you sure you want to delete?");
-            if (reallyDelete) {
-                deleteTask(ratings, k.id);
+    function renderTasks() {
+        let submittedList = document.querySelector("#ratings"); // Assuming #ratings is the <ul> or <ol> element
+        submittedList.innerHTML = ""; // Clear the list before rendering new items
+    
+        // Iterate over the ratings array (which is iterable)
+        for (let r of ratings) {
+            // Using createElement to create the <li> but using innerHTML to set the <li>
+            let liElement = document.createElement("li");
+            liElement.innerHTML = `
+                Name: ${r.name} | Outlet: ${r.store} | Rating: ${r.rating}
+                
+                <button class="edit">Edit</button> 
+                <button class="delete">Delete</button>
+            `;
+            /* 
+            // Set the checkbox to checked if the task is done
+            let checkbox = liElement.querySelector(".checkbox");
+            checkbox.checked = r.done;
+            checkbox.addEventListener("click", function() {
+                updateTaskDone(ratings, r.id);
                 renderTasks();
-            }
-        })
-
-        submittedList.appendChild(liElement);
-    }
+            });*/
+    
+            // Edit button functionality
+            let editButton = liElement.querySelector(".edit");
+            editButton.addEventListener("click", function() {
+                let newCustName = prompt("Enter the new customer name: ", r.name);
+                let newstore = prompt("Enter Outlet:", r.store.value);
+                let newRating = prompt("Enter the new rating: ", r.rating);
+    
+                updateTask(ratings, r.id, newCustName, newstore, newRating);
+                renderTasks(); // redraw all the tasks, along with any changes
+            });
+    
+            // Delete button functionality
+            let deleteButton = liElement.querySelector(".delete");
+            deleteButton.addEventListener("click", function() {
+                let reallyDelete = confirm("Are you sure you want to delete?");
+                if (reallyDelete) {
+                    deleteTask(ratings, r.id);
+                    renderTasks();
+                }
+            });
+    
+            // Append the <li> element to the <ul> or <ol>
+            submittedList.appendChild(liElement);
+        }   
 }
