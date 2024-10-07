@@ -64,19 +64,4 @@ function deleteTask(ratings, ratingIdToDelete) {
    ratings.splice(indexToDelete, 1);
    saveData(ratings);
 }
-/*
-function updateTaskDone(ratings, ratingId) {
-   let index = ratings.findIndex(function(r){
-       return r.id == ratingId
-   });
 
-   // if the the task is already done, check it as not done
-   // if (tasks[index].done) {
-   //     tasks[index].done = false;
-   // } else {
-   //     tasks[index].done = true;
-   // }
-
-   // or we can just use the ! operator to invert
-   ratings[index].done = !ratings[index].done;
-}*/
