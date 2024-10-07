@@ -29,6 +29,7 @@ function addTask(submittedList, newCustName, newstore, newRate) {
 
    // add the new task to the array
    submittedList.push(newRatings);
+   
 }
 
 function updateTask(submittedList, rateId, newCustName, newstore, newRating){
@@ -41,7 +42,7 @@ function updateTask(submittedList, rateId, newCustName, newstore, newRating){
    
    // 2. do the replacement
    // make sure index is no null, undefined or 0 etc.
-   if (index) {
+   if (index !==-1) {
     submittedList[index] = {
            "id": rateId,
            "name": newCustName,
@@ -49,6 +50,7 @@ function updateTask(submittedList, rateId, newCustName, newstore, newRating){
            "rating": newRating
        }
    }
+   saveData(ratings);
 }
 
 function deleteTask(ratings, ratingIdToDelete) {
@@ -60,8 +62,9 @@ function deleteTask(ratings, ratingIdToDelete) {
 
    // 2. delete the task from the array
    ratings.splice(indexToDelete, 1);
+   saveData(ratings);
 }
-
+/*
 function updateTaskDone(ratings, ratingId) {
    let index = ratings.findIndex(function(r){
        return r.id == ratingId
@@ -76,4 +79,4 @@ function updateTaskDone(ratings, ratingId) {
 
    // or we can just use the ! operator to invert
    ratings[index].done = !ratings[index].done;
-}
+}*/

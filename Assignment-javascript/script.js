@@ -48,24 +48,15 @@ window.addEventListener("DOMContentLoaded", async function(){
             let liElement = document.createElement("li");
             liElement.innerHTML = `
                 Name: ${r.name} | Outlet: ${r.store} | Rating: ${r.rating}
-                
                 <button class="edit">Edit</button> 
                 <button class="delete">Delete</button>
             `;
-            /* 
-            // Set the checkbox to checked if the task is done
-            let checkbox = liElement.querySelector(".checkbox");
-            checkbox.checked = r.done;
-            checkbox.addEventListener("click", function() {
-                updateTaskDone(ratings, r.id);
-                renderTasks();
-            });*/
-    
+
             // Edit button functionality
             let editButton = liElement.querySelector(".edit");
             editButton.addEventListener("click", function() {
                 let newCustName = prompt("Enter the new customer name: ", r.name);
-                let newstore = prompt("Enter Outlet:", r.store.value);
+                let newstore = prompt("Enter Outlet:", r.store);
                 let newRating = prompt("Enter the new rating: ", r.rating);
     
                 updateTask(ratings, r.id, newCustName, newstore, newRating);
